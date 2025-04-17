@@ -1,7 +1,7 @@
 import { userData, systemData, loadDefaultData } from "./database";
 import { getDomainName, getCorsOrigins } from "../config";
-import { Bedrock } from "aws-sdk";
 
+// AWS SDK is available at runtime in Lambda environments
 const bedrockPermissions = {
   actions: [
     'bedrock:ListFoundationModels',
@@ -53,50 +53,167 @@ export const brainsOS_API = new sst.aws.ApiGatewayV2("brains_api_latest", {
 brainsOS_API.route("POST /latest/commands", {
   link: [systemData], //add these links here... not in API area. Might be a bug.
   handler: "packages/brainsOS/functions/api/command/commandHandler.handler",
-  permissions: [ bedrockPermissions ]
+  permissions: [ bedrockPermissions ],
+  environment: {
+    USER_DATA_TABLE_NAME: userData.name,
+    SYSTEM_DATA_TABLE_NAME: systemData.name
+  },
+  nodejs: {
+    esbuild: {
+      external: [
+        "@aws-sdk/client-dynamodb",
+        "@aws-sdk/lib-dynamodb",
+        "sst",
+        "flat",
+        "zod"
+      ]
+    }
+  }
 });
 
 brainsOS_API.route("POST /latest/services/transform/{objectType}/{fromView}/{toView}", {
   handler: "packages/brainsOS/functions/api/services/transform/transformHandler.handler",
   link: [systemData],
+  environment: {
+    USER_DATA_TABLE_NAME: userData.name,
+    SYSTEM_DATA_TABLE_NAME: systemData.name
+  },
+  nodejs: {
+    esbuild: {
+      external: [
+        "@aws-sdk/client-dynamodb",
+        "@aws-sdk/lib-dynamodb",
+        "sst",
+        "flat",
+        "zod",
+        "marked"
+      ]
+    }
+  }
 });
 
 
 brainsOS_API.route("POST /latest/services/prompt/{promptType}", {
   permissions: [ bedrockPermissions ],
   link: [userData],
-  timeout: "3 minutes", 
+  timeout: "3 minutes",
   handler: "packages/brainsOS/functions/api/services/prompt/promptHandler.handler",
+  environment: {
+    USER_DATA_TABLE_NAME: userData.name,
+    SYSTEM_DATA_TABLE_NAME: systemData.name
+  },
   nodejs: {
     loader: {
      ".md": "text"
-      }
+    },
+    esbuild: {
+      external: [
+        "@aws-sdk/client-dynamodb",
+        "@aws-sdk/lib-dynamodb",
+        "sst",
+        "flat"
+      ]
     }
+  }
 });
 
 brainsOS_API.route("GET /latest/services/prompt/{promptType}", {
   permissions: [ bedrockPermissions ],
   handler: "packages/brainsOS/functions/api/services/prompt/promptHandler.handler",
+  environment: {
+    USER_DATA_TABLE_NAME: userData.name,
+    SYSTEM_DATA_TABLE_NAME: systemData.name
+  },
+  nodejs: {
+    esbuild: {
+      external: [
+        "@aws-sdk/client-dynamodb",
+        "@aws-sdk/lib-dynamodb",
+        "sst",
+        "flat"
+      ]
+    }
+  }
 });
 
 // For user data
 brainsOS_API.route("GET /latest/resources/{dataStore}/{object}", {
   link: [userData, loadDefaultData],
   handler: "packages/brainsOS/functions/api/resources/resourcesHandler.handler",
+  environment: {
+    USER_DATA_TABLE_NAME: userData.name,
+    SYSTEM_DATA_TABLE_NAME: systemData.name
+  },
+  nodejs: {
+    esbuild: {
+      external: [
+        "@aws-sdk/client-dynamodb",
+        "@aws-sdk/lib-dynamodb",
+        "sst",
+        "flat",
+        "zod"
+      ]
+    }
+  }
 });
 
 brainsOS_API.route("GET /latest/resources/{dataStore}/{object}/{name}", {
   link: [userData, loadDefaultData],
   handler: "packages/brainsOS/functions/api/resources/resourcesHandler.handler",
+  environment: {
+    USER_DATA_TABLE_NAME: userData.name,
+    SYSTEM_DATA_TABLE_NAME: systemData.name
+  },
+  nodejs: {
+    esbuild: {
+      external: [
+        "@aws-sdk/client-dynamodb",
+        "@aws-sdk/lib-dynamodb",
+        "sst",
+        "flat",
+        "zod"
+      ]
+    }
+  }
 });
 
 brainsOS_API.route("GET /latest/resources/{dataStore}/{object}/{name}/{version}", {
   link: [userData, loadDefaultData],
   handler: "packages/brainsOS/functions/api/resources/resourcesHandler.handler",
+  environment: {
+    USER_DATA_TABLE_NAME: userData.name,
+    SYSTEM_DATA_TABLE_NAME: systemData.name
+  },
+  nodejs: {
+    esbuild: {
+      external: [
+        "@aws-sdk/client-dynamodb",
+        "@aws-sdk/lib-dynamodb",
+        "sst",
+        "flat",
+        "zod"
+      ]
+    }
+  }
 });
 
 brainsOS_API.route("POST /latest/resources/{dataStore}/{object}", {
   link: [userData],
   handler: "packages/brainsOS/functions/api/resources/resourcesHandler.handler",
+  environment: {
+    USER_DATA_TABLE_NAME: userData.name,
+    SYSTEM_DATA_TABLE_NAME: systemData.name
+  },
+  nodejs: {
+    esbuild: {
+      external: [
+        "@aws-sdk/client-dynamodb",
+        "@aws-sdk/lib-dynamodb",
+        "sst",
+        "flat",
+        "zod"
+      ]
+    }
+  }
 });
 

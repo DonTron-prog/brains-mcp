@@ -1,13 +1,12 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { 
-  DynamoDBDocumentClient, 
-  PutCommand, 
+import {
+  DynamoDBDocumentClient,
+  PutCommand,
   GetCommand,
   UpdateCommand,
   QueryCommand,
   DeleteCommand
 } from "@aws-sdk/lib-dynamodb";
-import { Resource } from "sst";
 
 // Consolidate client creation
 export const dynamoDb = DynamoDBDocumentClient.from(new DynamoDBClient({}));
@@ -17,7 +16,7 @@ export async function queryItems(
   prefixFilter: string
 ) {
   const command = new QueryCommand({
-    TableName: Resource.systemData.name,
+    TableName: process.env.SYSTEM_DATA_TABLE_NAME || "",
     KeyConditionExpression: 'userId = :userId AND begins_with(typeName, :prefix)',
     ExpressionAttributeValues: {
       ':userId': userId,
@@ -35,7 +34,7 @@ export async function putItem(
   attributes: Record<string, unknown>
 ) {
   const command = new PutCommand({
-    TableName: Resource.systemData.name,
+    TableName: process.env.SYSTEM_DATA_TABLE_NAME || "",
     Item: {
       userId,
       typeName,
