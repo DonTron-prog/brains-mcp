@@ -23,8 +23,11 @@ const region = aws.getRegionOutput().name;
       VITE_BRAINSOS_VERSION: getVersion('latest', $app.stage),
       VITE_STAGE: $app.stage
     },
-    domain: {
-      name: getDomainName('frontend', 'latest', $app.stage)
-    },
+    // Only use custom domain if not in local development
+    ...(process.env.IS_LOCAL_DEV ? {} : {
+      domain: {
+        name: getDomainName('frontend', 'latest', $app.stage)
+      }
+    }),
     
   });

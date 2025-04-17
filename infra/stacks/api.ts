@@ -39,9 +39,12 @@ export const brainsOS_API = new sst.aws.ApiGatewayV2("brains_api_latest", {
     
   },
  
-  domain: {
-    name: getDomainName('api', 'latest', $app.stage)
-  },
+  // Only use custom domain if not in local development
+  ...(process.env.IS_LOCAL_DEV ? {} : {
+    domain: {
+      name: getDomainName('api', 'latest', $app.stage)
+    }
+  }),
 });
 
 
