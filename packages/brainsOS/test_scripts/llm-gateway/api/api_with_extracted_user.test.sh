@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Load environment variables
-source ../../.env.test
+source .env.test
 
 # Set API Base URL (you may need to adjust this)
-API_BASE_URL="${API_BASE_URL:-https://dev-api.brainsos.ai}/llm-gateway"
+API_BASE_URL="${API_BASE_URL:-https://dev-api.outofdimension.com}/llm-gateway"
 
 # Colors for better output
 GREEN='\033[0;32m'
@@ -91,7 +91,7 @@ call_api() {
                 if [ "$CONVERSATION_ID" != "null" ] && [ ! -z "$CONVERSATION_ID" ]; then
                     echo -e "${GREEN}Saved conversation ID: ${CONVERSATION_ID}${NC}"
                 fi
-            }
+            fi
         else
             # If not valid JSON, print as is
             echo "$response"

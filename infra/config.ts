@@ -1,6 +1,6 @@
 // Base domain configuration
 // domain must be registered in Route53
-export const baseDomain = "brainsos.ai";
+export const baseDomain = "outofdimension.com";
 
 interface DomainConfig {
   api: {

@@ -9,7 +9,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs';
 import { Resource } from 'sst';
-import { extractMCPCommands, isValidCommand, MCPCommand, cleanResponseContent } from './utils/MCPParser';
+import { extractMCPCommands, isValidCommand, MCPCommand, cleanResponseContent } from './utils/mcpParser';
 import { MCPTool, MCPTransformer, MCPPrompt, MCPResource, MCPToolRequest } from './types/MCPRequests';
 import { MCPComponentManager } from './utils/MCPComponentManager';
 import { MCPPromptBuilder } from './utils/MCPPromptBuilder';

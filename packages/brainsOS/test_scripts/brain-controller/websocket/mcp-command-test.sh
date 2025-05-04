@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Load environment variables
-source ../../.env.test
+source .env.test
 
 # Get Cognito tokens
 echo "Getting Cognito tokens..."
@@ -33,16 +33,16 @@ echo "Connection established! You can now send messages."
 echo "Example messages to test MCP command extraction (copy and paste):"
 echo ""
 echo "1. TEST CALCULATOR: Ask the brain to add two numbers using MCP:"
-echo '{"action": "brain/terminal", "data": {"rawData": "Can you add 5 and 3 for me using the calculator command?", "requestStreaming": false, "commandId": "test_mcp_001", "timestamp": "2023-04-14T12:00:00Z", "source": "terminal"}}'
+echo '{"action": "brain/terminal/request", "data": {"rawData": "Can you add 5 and 3 for me using the calculator command?", "requestStreaming": false, "commandId": "test_mcp_001", "timestamp": "2023-04-14T12:00:00Z", "source": "terminal"}}'
 echo ""
 echo "2. TEST KNOWLEDGE: Ask something that should NOT use a command:"
-echo '{"action": "brain/terminal", "data": {"rawData": "What is the capital of France?", "requestStreaming": false, "commandId": "test_mcp_002", "timestamp": "2023-04-14T12:01:00Z", "source": "terminal"}}'
+echo '{"action": "brain/terminal/request", "data": {"rawData": "What is the capital of France?", "requestStreaming": false, "commandId": "test_mcp_002", "timestamp": "2023-04-14T12:01:00Z", "source": "terminal"}}'
 echo ""
 echo "3. TEST TRANSFORM: Ask to convert some data using a transformer:"
-echo '{"action": "brain/terminal", "data": {"rawData": "Can you convert this CSV to JSON: name,age\\nJohn,30\\nJane,25", "requestStreaming": false, "commandId": "test_mcp_003", "timestamp": "2023-04-14T12:02:00Z", "source": "terminal"}}'
+echo '{"action": "brain/terminal/request", "data": {"rawData": "Can you convert this CSV to JSON: name,age\\nJohn,30\\nJane,25", "requestStreaming": false, "commandId": "test_mcp_003", "timestamp": "2023-04-14T12:02:00Z", "source": "terminal"}}'
 echo ""
 echo "4. TEST COMMAND LIST: Ask about available commands:"
-echo '{"action": "brain/terminal", "data": {"rawData": "What commands or tools do you have available?", "requestStreaming": false, "commandId": "test_mcp_004", "timestamp": "2023-04-14T12:03:00Z", "source": "terminal"}}'
+echo '{"action": "brain/terminal/request", "data": {"rawData": "What commands or tools do you have available?", "requestStreaming": false, "commandId": "test_mcp_004", "timestamp": "2023-04-14T12:03:00Z", "source": "terminal"}}'
 echo ""
 echo "Note: This test script is specifically for testing MCP command extraction and execution."
 echo "The brain should parse JSON from the response and send commands to the MCP server."

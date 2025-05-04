@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Load environment variables
-source ../../.env.test
+source .env.test
 
 # Get Cognito tokens
 echo "Getting Cognito tokens..."

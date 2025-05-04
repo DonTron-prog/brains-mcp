@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # Load environment variables
-source ../../.env.test
+source .env.test
 
 # SECURITY NOTE: This script follows a secure approach where user identity
 # is always determined from the authentication token, never from request body.
 # The LLM Gateway API ignores any userId in the request body to prevent impersonation attacks.
 
 # Set API Base URL (you may need to adjust this)
-API_BASE_URL="${API_BASE_URL:-https://dev-api.brainsos.ai}/llm-gateway"
+API_BASE_URL="${API_BASE_URL:-https://dev-api.outofdimension.com}/llm-gateway"
 
 # Colors for better output
 GREEN='\033[0;32m'
@@ -55,8 +55,8 @@ call_api() {
     echo -e "${BLUE}Endpoint: ${endpoint}${NC}"
     echo -e "${BLUE}Payload: ${payload}${NC}"
     
-    # Make the API call
-    local response=$(curl -s -X POST \
+    # Make the API call (added -v for verbose output)
+    local response=$(curl -s -v -X POST \
         -H "Content-Type: application/json" \
         -H "Authorization: Bearer $ID_TOKEN" \
         -d "$payload" \
